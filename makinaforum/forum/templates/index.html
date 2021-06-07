@@ -4,12 +4,24 @@
 <h1>Bienvenue sur le forum</h1>
 <p>Cliquez sur les sujets pour acceder au discussions</p>
     {% if threads %}
-        <ul>
         {% for thread in threads %}
-        <li><a href="{% url 'forum:detail' thread.id %}">{{ thread.name }}</a></li>
+        <a class="no-style" href="{% url 'forum:detail' thread.id %}">
+            <div class="card mb-3">
+              <div class="card-header">
+                <h4 class="mb-1">{{ thread.name }}</h4>
+                <p class="mb-0 small">Publié par <a href="#">{{ thread.author }}</a></p>
+              </div>
+              <div class="card-body">
+                <p class="card-text">{{ thread.description }}</p>
+              </div>
+              <div class="card-footer text-muted">
+                {{ thread.messages.count }} message{% if thread.messages.count > 1 %}s{% endif %}
+              </div>
+
+            </div>
+        </a>
         {% endfor %}
-        </ul>
     {% else %}
-        <p>No threads are available.</p>
+        <p>Pas de thread</p>
     {% endif %}
 {% endblock content %}

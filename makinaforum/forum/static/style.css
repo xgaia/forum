@@ -1,0 +1,8 @@
+a.no-style, a.no-style:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+p.small {
+  size: 0.5rem;
+}
