@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ thread.name }}</h1>
+    <h5>{{ thread.desc }}</h5>
+    {% if thread.messages.all %}
+        <ul>
+        {% for message in thread.messages.all %}
+            <li><p>{{ message.message }}</p></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages yet.</p>
+    {% endif %}
+
+{% endblock content %}
