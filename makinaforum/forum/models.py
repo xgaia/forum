@@ -13,4 +13,4 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages")
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="messages")
     message = models.CharField(max_length=200)
-    date = models.DateTimeField('date')
+    date = models.DateTimeField('date', auto_now_add=True)

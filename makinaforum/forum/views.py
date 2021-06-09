@@ -42,3 +42,16 @@ def new(request):
     )
     new_thread.save()
     return HttpResponseRedirect(reverse('forum:index'))
+
+@login_required
+def comment(request, thread_id):
+
+    thread = get_object_or_404(Thread, pk=thread_id)
+
+    new_message = Message(
+        author=request.user,
+        thread=thread,
+        message=request.POST["comment"],
+    )
+    new_message.save()
+    return HttpResponseRedirect(reverse('forum:detail', args=(thread_id, )))

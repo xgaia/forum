@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <h1>{{ thread.name }}</h1>
-    <h5>{{ thread.desc }}</h5>
+    <p class="small">Proposé par <a href="#">{{ thread.author }}</a></p>
+    <h5>{{ thread.description }}</h5>
+
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'forum:comment' thread.id %}">
+        {% csrf_token %}
+        <div class="my-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Commentaire</label>
+          <textarea placeholder="commentaire" name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Poster</button>
+        </div>
+      </form>
+    {% endif %}
+
     {% if thread.messages.all %}
-        <ul>
         {% for message in thread.messages.all %}
-            <li><p>{{ message.message }}</p></li>
+            <div class="my-3">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="mb-1 small">Écrit par <a href="#">{{message.author}}</a></p>
+                    <p>{{ message.message }}</p>
+                  </div>
+                </div>
+            </div>
         {% endfor %}
         </ul>
     {% else %}
