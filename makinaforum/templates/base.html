@@ -27,15 +27,20 @@
         </button>
         <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
           <ul class="navbar-nav d-flex mb-2 mb-lg-0">
+          {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Account
+                {{user.username}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}?next={% url 'forum:index' %}">Logout</a></li>
               </ul>
             </li>
-
+          {% else %}
+            <li class="nav-item">
+               <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
           </ul>
 
         </div>

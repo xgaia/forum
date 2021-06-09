@@ -2,6 +2,9 @@
 
 {% block content %}
 <h1>Bienvenue sur le forum</h1>
+{% if user.is_authenticated %}
+<p>Bonjour {{user.username}}</p>
+{% endif %}
 <p>Cliquez sur les sujets pour acceder au discussions</p>
     {% if threads %}
         {% for thread in threads %}
