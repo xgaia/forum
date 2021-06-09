@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Ajouter un thread</h1>
+
+{% if user.is_authenticated %}
+  <form method="post" action="{% url 'forum:new' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Sujet</label>
+      <input name="subject" type="text" class="form-control" id="exampleFormControlInput1" placeholder="sujet">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+      <textarea placeholder="description" name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Ajouter</button>
+    </div>
+  </form>
+{% endif %}
+
+{% endblock content %}

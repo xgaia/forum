@@ -28,7 +28,7 @@
         <label for="id_password" class="form-label">Mot de passe</label>
         <input name="password" placeholder="mot de passe" type="password" class="form-control" id="id_password">
       </div>
-      <button type="submit" value="login" class="btn btn-primary">Connexion</button>
+      <button type="submit" value="login" class="btn btn-outline-secondary">Connexion</button>
       <input type="hidden" name="next" value="{% url 'forum:index' %}">
       <p><a href="{% url 'password_reset' %}">Mot de passe perdu ?</a></p>
     </form>

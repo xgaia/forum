@@ -6,7 +6,7 @@ class Thread(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="threads")
     public = models.BooleanField(default=False)
     description = models.CharField(max_length=200)
-    date = models.DateTimeField('date')
+    date = models.DateTimeField('date', auto_now_add=True)
 
 
 class Message(models.Model):

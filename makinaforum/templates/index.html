@@ -3,28 +3,28 @@
 {% block content %}
 <h1>Bienvenue sur le forum</h1>
 {% if user.is_authenticated %}
-<p>Bonjour {{user.username}}</p>
+<p>Bonjour {{user.username}}, retrouvez sur cette page tous les threads.</p>
 {% endif %}
-<p>Cliquez sur les sujets pour acceder au discussions</p>
-    {% if threads %}
-        {% for thread in threads %}
-        <a class="no-style" href="{% url 'forum:detail' thread.id %}">
-            <div class="card mb-3">
-              <div class="card-header">
-                <h4 class="mb-1">{{ thread.name }}</h4>
-                <p class="mb-0 small">Publié par <a href="#">{{ thread.author }}</a></p>
-              </div>
-              <div class="card-body">
-                <p class="card-text">{{ thread.description }}</p>
-              </div>
-              <div class="card-footer text-muted">
-                {{ thread.messages.count }} message{% if thread.messages.count > 1 %}s{% endif %}
-              </div>
 
-            </div>
-        </a>
-        {% endfor %}
-    {% else %}
-        <p>Pas de thread</p>
-    {% endif %}
+{% if threads %}
+    {% for thread in threads %}
+    <a class="no-style" href="{% url 'forum:detail' thread.id %}">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4 class="mb-1">{{ thread.name }}</h4>
+            <p class="mb-0 small">Publié par <a href="#">{{ thread.author }}</a></p>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ thread.description }}</p>
+          </div>
+          <div class="card-footer text-muted">
+            {{ thread.messages.count }} message{% if thread.messages.count > 1 %}s{% endif %}
+          </div>
+
+        </div>
+    </a>
+    {% endfor %}
+{% else %}
+    <p>Pas de thread</p>
+{% endif %}
 {% endblock content %}
