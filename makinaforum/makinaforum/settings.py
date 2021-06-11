@@ -12,20 +12,23 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&al6uk!gwr&ep5uqmrt%19pj_0t#rua@dyps9#+m=da&0d+vla'
+SECRET_KEY = env("SECRET_KEY", default="django-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="localhost").split(",")
 
 
 # Application definition
@@ -74,12 +77,25 @@ WSGI_APPLICATION = 'makinaforum.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+database = env("DATABASE", default="sqlite")
+if database == "postgres":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env("DATABASE_NAME", default="forum"),
+            'USER': env("DATABASE_USER", default="forum"),
+            'PASSWORD': env("DATABASE_PASSWORD", default="secret-password"),
+            'HOST': env("DATABASE_HOST", default="127.0.0.1"),
+            'PORT': env("DATABASE_PORT", default="5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

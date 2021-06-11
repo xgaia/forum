@@ -30,3 +30,7 @@ python manage.py runserver 8000
 ````
 
 App is available at [localhost:8000](http://localhost:8000)
+
+## Production deployment with [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/)
+
+Use the `docker-compose.yml` file to deploy the app with docker.

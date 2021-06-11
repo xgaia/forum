@@ -7,3 +7,5 @@ COPY requirements.txt /forum/
 RUN pip install -r requirements.txt
 COPY start.sh /forum/
 COPY makinaforum/ /forum/
+
+CMD ["/forum/start.sh"]

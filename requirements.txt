@@ -1,1 +1,3 @@
 Django
+python-environ
+psycopg2

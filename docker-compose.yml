@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  forum:
+    image: xgaia/forum:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DEBUG: "false"
+      SECRET_KEY: super-secret-key
+      DATABASE: postgres
+      DATABASE_NAME: forum
+      DATABASE_USER: forum
+      DATABASE_PASSWORD: super-secret-password
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      ALLOWED_HOSTS: "localhost,example.org"
+    # command: bash start.sh
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST: forum
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: forum
+      POSTGRES_USER: forum
+      POSTGRES_PASSWORD: super-secret-password
+
+
