@@ -2,18 +2,18 @@
 
 {% block content %}
     <h1>{{ thread.name }}</h1>
-    <p class="small">Proposé par <a href="#">{{ thread.author }}</a></p>
+    <p class="small">Suggested by <a href="#">{{ thread.author }}</a></p>
     <h5>{{ thread.description }}</h5>
 
     {% if user.is_authenticated %}
       <form method="post" action="{% url 'forum:detail' thread.id %}">
         {% csrf_token %}
         <div class="my-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Commentaire</label>
+          <label for="exampleFormControlTextarea1" class="form-label">Comments</label>
           <textarea placeholder="commentaire" name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <div class="mb-3">
-          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Poster</button>
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>
         </div>
       </form>
     {% endif %}
@@ -29,7 +29,7 @@
             <div class="my-3">
                 <div class="card">
                   <div class="card-body">
-                    <p class="mb-1 small">Écrit par <a href="#">{{message.author}}</a></p>
+                    <p class="mb-1 small">Written by <a href="#">{{message.author}}</a></p>
                     <p>{{ message.message }}</p>
                   </div>
                 </div>
@@ -37,7 +37,9 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No messages yet.</p>
+    <div class="alert alert-secondary" role="alert">
+      No messages yet.
+    </div>
     {% endif %}
 
 {% endblock content %}

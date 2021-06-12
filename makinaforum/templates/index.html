@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Bienvenue sur le forum</h1>
+<h1>Welcome to the forum</h1>
 {% if user.is_authenticated %}
-<p>Bonjour {{user.username}}, retrouvez sur cette page tous les threads.</p>
+<p>Hello {{user.username}}!</p>
 {% endif %}
 
 {% if threads %}
@@ -12,7 +12,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <h4 class="mb-1">{{ thread.name }}</h4>
-            <p class="mb-0 small">Proposé par <a href="#">{{ thread.author }}</a></p>
+            <p class="mb-0 small">Suggested by <a href="#">{{ thread.author }}</a></p>
           </div>
           <div class="card-body">
             <p class="card-text">{{ thread.description }}</p>
