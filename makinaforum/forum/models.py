@@ -7,6 +7,7 @@ class Thread(models.Model):
     public = models.BooleanField(default=False)
     description = models.CharField(max_length=200)
     date = models.DateTimeField('date', auto_now_add=True)
+    voters = models.ManyToManyField(User)
 
 
 class Message(models.Model):

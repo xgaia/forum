@@ -11,7 +11,20 @@
     <a class="no-style" href="{% url 'forum:detail' thread.id %}">
         <div class="card mb-3">
           <div class="card-header">
-            <h4 class="mb-1">{{ thread.name }}</h4>
+
+            <div class="row">
+              <div class="col-auto px-0">
+                <form method="post" action="{% url 'forum:vote' thread.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-link">
+                    <span class="badge bg-{% if user in thread.voters.all %}danger{% else %}secondary{% endif %}">{{ thread.voters.all.count }}</span>
+                  </button>
+                </form>
+              </div>
+              <div class="col-auto px-0">
+                <h4 class="mb-1">{{ thread.name }}</h4>
+              </div>
+            </div>
             <p class="mb-0 small">Suggested by <a href="#">{{ thread.author }}</a></p>
           </div>
           <div class="card-body">
@@ -25,6 +38,8 @@
     </a>
     {% endfor %}
 {% else %}
-    <p>Pas de thread</p>
+  <div class="alert alert-secondary" role="alert">
+    No thread yet.
+  </div>
 {% endif %}
 {% endblock content %}

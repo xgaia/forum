@@ -57,5 +57,22 @@ class AddView(generic.TemplateView):
             description=request.POST["description"],
             author=request.user,
         )
+        # Author of the thread is a voter
         new_thread.save()
+        new_thread.voters.add(request.user)
         return HttpResponseRedirect(reverse('forum:index'))
+
+@login_required
+def vote(request, thread_id):
+
+    thread = get_object_or_404(Thread, pk=thread_id)
+
+    # Author can't remove his vote
+    if not thread.author == request.user:
+        # Remove or add vote
+        if request.user in thread.voters.all():
+            thread.voters.remove(request.user)
+        else:
+            thread.voters.add(request.user)
+
+    return HttpResponseRedirect(reverse('forum:index'))
