@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from .models import Thread, Message
@@ -19,39 +20,43 @@ class DetailView(generic.DetailView):
     model = Thread
     template_name = 'detail.html'
 
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = super(DetailView, self).get_context_data(**kwargs)
 
-class AddView(generic.ListView):
+        if not request.POST["comment"]:
+            context["error"] = True
+            context["message"] = "Please fill comment field."
+            return self.render_to_response(context=context)
+
+        new_message = Message(
+            author=request.user,
+            thread=self.object,
+            message=request.POST["comment"],
+        )
+        new_message.save()
+        return self.render_to_response(context=context)
+
+
+
+class AddView(generic.TemplateView):
     template_name = 'add.html'
-    context_object_name = 'threads'
 
-    def get_queryset(self):
-        return Thread.objects.order_by('-date')
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
 
+        context = super(AddView, self).get_context_data(**kwargs)
 
-# class AddView(generic.DetailView):
-#     model = Thread
-#     template_name = 'detail.html'
+        if not request.POST["subject"] or not request.POST["description"]:
+            context["error"] = True
+            context["message"] = "Please fill all fields."
+            return self.render_to_response(context=context)
 
-@login_required
-def new(request):
-
-    new_thread = Thread(
-        name=request.POST["subject"],
-        description=request.POST["description"],
-        author=request.user,
-    )
-    new_thread.save()
-    return HttpResponseRedirect(reverse('forum:index'))
-
-@login_required
-def comment(request, thread_id):
-
-    thread = get_object_or_404(Thread, pk=thread_id)
-
-    new_message = Message(
-        author=request.user,
-        thread=thread,
-        message=request.POST["comment"],
-    )
-    new_message.save()
-    return HttpResponseRedirect(reverse('forum:detail', args=(thread_id, )))
+        new_thread = Thread(
+            name=request.POST["subject"],
+            description=request.POST["description"],
+            author=request.user,
+        )
+        new_thread.save()
+        return HttpResponseRedirect(reverse('forum:index'))

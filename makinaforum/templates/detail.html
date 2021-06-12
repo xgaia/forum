@@ -6,7 +6,7 @@
     <h5>{{ thread.description }}</h5>
 
     {% if user.is_authenticated %}
-      <form method="post" action="{% url 'forum:comment' thread.id %}">
+      <form method="post" action="{% url 'forum:detail' thread.id %}">
         {% csrf_token %}
         <div class="my-3">
           <label for="exampleFormControlTextarea1" class="form-label">Commentaire</label>
@@ -16,6 +16,12 @@
           <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Poster</button>
         </div>
       </form>
+    {% endif %}
+
+    {% if error %}
+    <div class="my-3 alert alert-danger" role="alert">
+      {{ message }}
+    </div>
     {% endif %}
 
     {% if thread.messages.all %}

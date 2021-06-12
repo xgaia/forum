@@ -4,7 +4,7 @@
 <h1>Ajouter un thread</h1>
 
 {% if user.is_authenticated %}
-  <form method="post" action="{% url 'forum:new' %}">
+  <form method="post" action="{% url 'forum:add' %}">
     {% csrf_token %}
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Sujet</label>
@@ -18,6 +18,12 @@
       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Ajouter</button>
     </div>
   </form>
+{% endif %}
+
+{% if error %}
+<div class="my-3 alert alert-danger" role="alert">
+  {{ message }}
+</div>
 {% endif %}
 
 {% endblock content %}
