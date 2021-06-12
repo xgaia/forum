@@ -39,7 +39,6 @@ class DetailView(generic.DetailView):
         return self.render_to_response(context=context)
 
 
-
 class AddView(generic.TemplateView):
     template_name = 'add.html'
 
