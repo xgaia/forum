@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -13,7 +14,7 @@ class IndexView(generic.ListView):
     context_object_name = 'threads'
 
     def get_queryset(self):
-        return Thread.objects.order_by('-date')
+        return Thread.objects.annotate(n_votes=Count("voters"), n_comments=Count("messages")).order_by('-date', '-n_votes', '-n_comments',)
 
 
 class DetailView(generic.DetailView):
