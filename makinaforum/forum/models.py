@@ -15,3 +15,6 @@ class Message(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="messages")
     message = models.CharField(max_length=200)
     date = models.DateTimeField('date', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date']
