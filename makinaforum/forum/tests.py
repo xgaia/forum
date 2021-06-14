@@ -40,7 +40,7 @@ class CommentViewTests(TestCase):
 
     def test_no_comment(self):
         """
-        If no thread exist, no thread are returned
+        If no comment exist, no thread are returned
         """
         user = create_user("test")
         thread = create_thread("test", "a thread", user)
@@ -50,7 +50,7 @@ class CommentViewTests(TestCase):
 
     def test_one_comment(self):
         """
-        If no thread exist, no thread are returned
+        If no comment exist, no thread are returned
         """
         user = create_user("test")
         thread = create_thread("test", "a thread", user)
