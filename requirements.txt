@@ -1,3 +1,4 @@
 Django
 python-environ
 psycopg2
+gunicorn
