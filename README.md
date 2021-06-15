@@ -1,5 +1,7 @@
 # Forum
 
+[![Docker Build](https://img.shields.io/docker/pulls/xgaia/forum.svg)](https://hub.docker.com/r/xgaia/forum/)
+
 A simple forum, written in python with Django.
 
 ## Local install (development)
